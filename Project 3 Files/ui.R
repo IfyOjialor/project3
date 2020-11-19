@@ -120,11 +120,12 @@ shinyUI(fluidPage(theme = shinytheme("journal"),
                                   box(plotOutput('biplot'))),
                         
                           tabItem('Predi',
-                                  withMathJax(),
+                                  
                                   box(title = 'Prediction result', status = 'primary',
                                   p('This is a classification problem since we have to predict a binary outcome(Loan_Status) given a set of independent variables',
                                     'Logistic Regression is an estimation of the Logit function. The Logit function is simply a log of odds in favor of an event'),
-                                  p('logit(p) = log(p/(1-p))')),
+                                  withMathJax(
+                                  p('$$logit(p) = log(\\frac{p}{1-p}) = \\beta_0+\\beta_1X_1+\\beta_2X_2+...++\\beta_kX_k$$'))),
                                   selectInput('model', 'Choose a model type', c('Logistic Regression',
                                               'XGBoost')),
                                   selectInput('predz', 'Choose the predictor variables for modelling',
@@ -133,7 +134,7 @@ shinyUI(fluidPage(theme = shinytheme("journal"),
                                   uiOutput("text"),
                                   box(verbatimTextOutput('modelling', placeholder = TRUE)),
                                   box(verbatimTextOutput('predTest', placeholder = TRUE)),
-                                  # actionButton('cal','Calculate', icon = icon('calculator'))
+                                 
                                   ),
                                  
                          

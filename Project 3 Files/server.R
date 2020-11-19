@@ -84,80 +84,58 @@ shinyServer(function(input, output,session) {
     
     #Univariate analysis for numeric variables
     output$histPlot <- renderPlotly({
-        
-        if (input$num == 'Applicant Income'){
-             x <- ggplot(data = loan) + geom_histogram(aes(ApplicantIncome), stat = "bin", fill = 'green')+
-                theme(axis.text = element_text(size = 12))
-            ggplotly(x)
-        }
-        else if (input$num == 'Coapplicant Income'){
-            y <- ggplot(data=loan) + geom_histogram(aes(CoapplicantIncome), stat = "bin", fill = 'green')+
-            theme(axis.text = element_text(size = 12))
-            ggploly(y)
-            
-        }
-        
-        else if (input$num == 'Loan Amount'){
-            z <- ggplot(data=loan) + geom_histogram(aes(LoanAmount), stat = "bin", fill = 'green')+
-            theme(axis.text = element_text(size = 12))
-            ggplotly(z)
-        }
-        else if (input$num == 'Loan Amount Term'){
-            m <- ggplot(data=loan) + geom_histogram(aes(Loan_Amount_Term), stat = "bin", fill = 'green')+
-            theme(axis.text = element_text(size = 12))
-            ggplotly(m)
-        }
-        
+        plotInputNum()
     })
+    
     #For Categorical variables
     plotInputCat <- reactive({
-      if (input$cat == 'Gender'){
-        x <- ggplot(loan %>% filter(Gender != "") %>% group_by(Gender) %>% summarise(Count = n())) + geom_bar(aes(Gender, Count), 
-          stat = "identity", fill = "#f88379") + geom_label(aes(Gender, Count, label = Count), vjust = 0.5) + 
-          theme(axis.text.x = element_text(angle = 45, hjust = 1))
-        ggplotly(x)
-      } else if (input$cat == 'Married'){
-        y <- ggplot(loan %>% filter(Married != "") %>% group_by(Married) %>% summarise(Count = n())) + geom_bar(aes(Married, Count), 
-                                                                                                                stat = "identity", fill = "#f88379") + geom_label(aes(Married, Count, label = Count), vjust = 0.5) + 
-          theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
-        ggplotly(y)
-      } else if (input$cat == 'Dependents'){
-        z <- ggplot(loan %>% filter(Dependents != "") %>% group_by(Dependents) %>% summarise(Count = n())) + geom_bar(aes(Dependents, Count), 
-                                                                                                                      stat = "identity", fill = "#f88379") + geom_label(aes(Dependents, Count, label = Count), vjust = 0.5) + 
-          theme(axis.text.x = element_text(angle = 45, hjust = 1))
-        ggplotly(z)
-      } else if (input$cat == 'Education'){
-        m <- ggplot(loan %>% filter(Education != "") %>% group_by(Education) %>% summarise(Count = n())) + geom_bar(aes(Education, Count), 
-                                                                                                                    stat = "identity", fill = "#f88379") + geom_label(aes(Education, Count, label = Count), vjust = 0.5) + 
-          theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
-        ggplotly(m)
-      } else if (input$cat == 'Self Employed'){
-        n <- ggplot(loan %>% filter(Self_Employed != "") %>% group_by(Self_Employed) %>% summarise(Count = n())) + geom_bar(aes(Self_Employed, Count), 
-                                                                                                                            stat = "identity", fill = "#f88379") + geom_label(aes(Self_Employed, Count, label = Count), vjust = 0.5) + 
-          theme(axis.text.x = element_text(angle = 45, hjust = 1))
-        ggplotly(n)
-      } else if (input$cat == 'Credit History'){
-        o <- ggplot(loan %>% filter(Credit_History != "") %>% group_by(Credit_History) %>% summarise(Count = n())) + geom_bar(aes(Credit_History, Count), 
-                                                                                                                              stat = "identity", fill = "#f88379") + geom_label(aes(Credit_History, Count, label = Count), vjust = 0.5) + 
-          theme(axis.text.x = element_text(angle = 45, hjust = 1))
-        ggplotly(o)
-      } else if (input$cat == 'Property Area'){
-        p <- ggplot(loan %>% filter(Property_Area != "") %>% group_by(Property_Area) %>% summarise(Count = n())) + geom_bar(aes(Property_Area, Count), 
-                                                                                                                            stat = "identity", fill = "#f88379")+ geom_label(aes(Property_Area, Count, label = Count), vjust = 0.5) + 
-          theme(axis.text.x = element_text(angle = 45, hjust = 1))
-        ggplotly(p)
-      } else if (input$cat == 'Loan_Status'){
-        q <- ggplot(loan %>% filter(Loan_Status != "") %>% group_by(Loan_Status) %>% summarise(Count = n())) + geom_bar(aes(Loan_Status, Count), 
-                                                                                                                        stat = "identity", fill = "#f88379") + geom_label(aes(Loan_Status, Count, label = Count), vjust = 0.5) + 
-          theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
-        ggplotly(q)
-      }
+    if (input$cat == 'Gender'){
+        ggplot(loan %>% filter(Gender != "") %>% group_by(Gender) %>% summarise(Count = n())) + geom_bar(aes(Gender, Count), 
+        stat = "identity", fill = "#f88379") + geom_label(aes(Gender, Count, label = Count), vjust = 0.5) + 
+        theme(axis.text.x = element_text(angle = 45, hjust = 1))
       
+    } else if (input$cat == 'Married'){
+        ggplot(loan %>% filter(Married != "") %>% group_by(Married) %>% summarise(Count = n())) + geom_bar(aes(Married, Count), 
+        stat = "identity", fill = "#f88379") + geom_label(aes(Married, Count, label = Count), vjust = 0.5) + 
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+      
+    } else if (input$cat == 'Dependents'){
+        ggplot(loan %>% filter(Dependents != "") %>% group_by(Dependents) %>% summarise(Count = n())) + geom_bar(aes(Dependents, Count), 
+        stat = "identity", fill = "#f88379") + geom_label(aes(Dependents, Count, label = Count), vjust = 0.5) + 
+        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      
+    } else if (input$cat == 'Education'){
+        ggplot(loan %>% filter(Education != "") %>% group_by(Education) %>% summarise(Count = n())) + geom_bar(aes(Education, Count), 
+        stat = "identity", fill = "#f88379") + geom_label(aes(Education, Count, label = Count), vjust = 0.5) + 
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+      
+    } else if (input$cat == 'Self Employed'){
+        ggplot(loan %>% filter(Self_Employed != "") %>% group_by(Self_Employed) %>% summarise(Count = n())) + geom_bar(aes(Self_Employed, Count), 
+        stat = "identity", fill = "#f88379") + geom_label(aes(Self_Employed, Count, label = Count), vjust = 0.5) + 
+        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      
+    } else if (input$cat == 'Credit History'){
+        ggplot(loan %>% filter(Credit_History != "") %>% group_by(Credit_History) %>% summarise(Count = n())) + geom_bar(aes(Credit_History, Count), 
+        stat = "identity", fill = "#f88379") + geom_label(aes(Credit_History, Count, label = Count), vjust = 0.5) + 
+        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      
+    } else if (input$cat == 'Property Area'){
+        ggplot(loan %>% filter(Property_Area != "") %>% group_by(Property_Area) %>% summarise(Count = n())) + geom_bar(aes(Property_Area, Count), 
+        stat = "identity", fill = "#f88379")+ geom_label(aes(Property_Area, Count, label = Count), vjust = 0.5) + 
+        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      
+    } else if (input$cat == 'Loan_Status'){
+        ggplot(loan %>% filter(Loan_Status != "") %>% group_by(Loan_Status) %>% summarise(Count = n())) + geom_bar(aes(Loan_Status, Count), 
+        stat = "identity", fill = "#f88379") + geom_label(aes(Loan_Status, Count, label = Count), vjust = 0.5) + 
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+      
+    }
     })
+    
     #Univariate analysis for categorical variables
     output$freqPlot <- renderPlot({
-        p <- plotInputCat()
-        p
+        plotInputCat()
+        
     })
     
     #visualizations for explore tab
@@ -211,18 +189,19 @@ shinyServer(function(input, output,session) {
     
     
     output$download_plot1 <- downloadHandler(
-      filename = function() {
-        paste('loan', 'png', sep = ".")
-        },
+      filename = function(){
+        'EDAnum.png'} ,
       content = function(file) {
-        ggsave(file, plot = plotInputNum(), device = 'png')}
+        ggsave(file, plot = plotInputNum(), device = 'png')
+       
+        }
     )
     
 
     
     output$download_plot2 <- downloadHandler(
       filename = function() {
-        paste('loanC', 'png', sep = ".")
+        'EDAcat.png'
       },
       content = function(file) {
         ggsave(file, plot = plotInputCat(), device = 'png')}
@@ -246,7 +225,7 @@ shinyServer(function(input, output,session) {
         'loanExplore.png'
       },
       content = function(file) {
-        ggsave(file, plot = plotInputDash(), device = 'png')}
+        ggsave(file, plot = plotInputDash())}
     )
     
     output$table <- renderTable({
