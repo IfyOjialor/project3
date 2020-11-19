@@ -2,7 +2,6 @@
 library(shiny)
 library(shinydashboard)
 library(readr)
-library(GGally)
 library(ggplot2)
 library(tidyverse)
 library(dplyr)
@@ -185,18 +184,6 @@ shinyServer(function(input, output,session) {
       }
         
       })
-    
-    
-    
-    output$download_plot1 <- downloadHandler(
-      filename = function(){
-        'EDAnum.png'} ,
-      content = function(file) {
-        ggsave(file, plot = plotInputNum(), device = 'png')
-       
-        }
-    )
-    
 
     
     output$download_plot2 <- downloadHandler(
@@ -220,13 +207,6 @@ shinyServer(function(input, output,session) {
     }
     )
     
-    output$download_plot3 <- downloadHandler(
-      filename = function() {
-        'loanExplore.png'
-      },
-      content = function(file) {
-        ggsave(file, plot = plotInputDash())}
-    )
     
     output$table <- renderTable({
       Data <- getData()

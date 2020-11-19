@@ -74,7 +74,7 @@ shinyUI(fluidPage(theme = shinytheme("journal"),
                                       selectInput('num', "Numerical variables:", c('Applicant Income', 
                                                   'Coapplicant Income', 'Loan Amount', 'Loan Amount Term')),
                                       footer = 'Histogram plot for numerical variables'),
-                                  box(downloadButton('download_plot1', 'Download Plot')),
+                                  box(h4(strong('Click on the camera icon to download plot'))),
                                   box(plotlyOutput('histPlot')),
                                   
                                   #Frequency plot filter
@@ -98,10 +98,10 @@ shinyUI(fluidPage(theme = shinytheme("journal"),
                                                   sliderInput('bins', 'Number of bins:', min = 1, max = 100, value = 30),
                                                   h4("The plot will not be displayed when the slider is less than 10")
                                                   ),
+                                                  h4('Click on the camera icon to download plot'),
                                   box(conditionalPanel("input.bins >= 10",
                                                        plotlyOutput('barPlot'))),
-                                  box(downloadButton('download_plot3', 'Download Plot')),
-                                  box(verbatimTextOutput('summaryD'))),
+                                  verbatimTextOutput('summaryD')),
                                   
                           tabItem('pca',
                                   box(title = "Principal Component Analysis", status = 'success',
@@ -133,7 +133,7 @@ shinyUI(fluidPage(theme = shinytheme("journal"),
                                                 'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term')),
                                   uiOutput("text"),
                                   box(verbatimTextOutput('modelling', placeholder = TRUE)),
-                                  box(verbatimTextOutput('predTest', placeholder = TRUE)),
+                                  verbatimTextOutput('predTest'),
                                  
                                   ),
                                  
